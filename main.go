@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"time"
 
 	"cloud.google.com/go/pubsub"
 )
@@ -10,14 +11,20 @@ import (
 func main() {
 	log.Printf("Starting.")
 
-	client, err := pubsub.NewClient(context.Background(), "testproject")
+	stepDuration := time.Duration(3 * time.Second)
+
+	createClientCtx, cancelCreateClient := context.WithTimeout(context.Background(), stepDuration)
+	defer cancelCreateClient()
+	client, err := pubsub.NewClient(createClientCtx, "testproject")
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Create topic and subscription to it
 	topic := client.Topic("topic1")
-	sub, err := client.CreateSubscription(context.Background(), "subscription1", pubsub.SubscriptionConfig{
+	createSubCtx, cancelCreateSub := context.WithTimeout(context.Background(), stepDuration)
+	defer cancelCreateSub()
+	sub, err := client.CreateSubscription(createSubCtx, "subscription1", pubsub.SubscriptionConfig{
 		Topic: topic,
 	})
 	if err != nil {
@@ -25,17 +32,25 @@ func main() {
 	}
 
 	// Publish
-	res := topic.Publish(context.Background(), &pubsub.Message{
+	publishCtx, cancelPublish := context.WithTimeout(context.Background(), stepDuration)
+	defer cancelPublish()
+	res := topic.Publish(publishCtx, &pubsub.Message{
 		Data: []byte("hello world"),
 	})
-	msgID, err := res.Get(context.Background())
+
+	// Get publish results
+	getPublishResCtx, cancelGetPublishRes := context.WithTimeout(context.Background(), stepDuration)
+	defer cancelGetPublishRes()
+	msgID, err := res.Get(getPublishResCtx)
 	if err != nil {
 		log.Fatal(err)
 	}
 	log.Printf("Published message with ID: %s", msgID)
 
 	// Use a callback to receive messages via subscription1.
-	err = sub.Receive(context.Background(), func(ctx context.Context, m *pubsub.Message) {
+	receiveCtx, cancelReceive := context.WithTimeout(context.Background(), stepDuration)
+	defer cancelReceive()
+	err = sub.Receive(receiveCtx, func(ctx context.Context, m *pubsub.Message) {
 		log.Printf("Received message: %v", m)
 		m.Ack() // Acknowledge that we've consumed the message.
 		log.Printf("Acked message.")
