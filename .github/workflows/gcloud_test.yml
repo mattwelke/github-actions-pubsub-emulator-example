@@ -7,6 +7,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Set up Go'
+        uses: actions/setup-go@v2
       - name: 'Set up Cloud SDK'
         uses: google-github-actions/setup-gcloud@v0
       - name: 'Use gcloud CLI'
