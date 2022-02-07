@@ -34,12 +34,12 @@ func main() {
 	// 	Data: []byte("hello world"),
 	// })
 
-	// Get publish results
-	msgID, err := res.Get(context.Background())
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Printf("Published message with ID: %s", msgID)
+	// // Get publish results
+	// msgID, err := res.Get(context.Background())
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Printf("Published message with ID: %s", msgID)
 
 	for3Seconds, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	numAcked := 0
