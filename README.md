@@ -1,6 +1,6 @@
 # github-actions-pubsub-emulator-example
 
-GCP makes an emulator available for the Pub/Sub service. They do this by providing it as a gcloud component that you are meant to use 9https://cloud.google.com/pubsub/docs/emulator).
+GCP makes an emulator available for the Pub/Sub service. They do this by providing it as a gcloud component that you are meant to use (https://cloud.google.com/pubsub/docs/emulator).
 
 In GitHub Actions, when you have a use case where you want to run something in the background throughout your workflow, like running the Pub/Sub emulator for tests, you'd normally use services (https://docs.github.com/en/actions/using-containerized-services/about-service-containers). GitHub made this feature with this use case in mind.
 
