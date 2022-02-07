@@ -11,3 +11,6 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0
       - name: 'Use gcloud CLI'
         run: 'gcloud info'
+      - name: Run program
+        run: |
+          go run main.go
