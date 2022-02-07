@@ -1,4 +1,4 @@
-module github.com/mattwelke/gha-gcloud-test
+module github.com/mattwelke/github-actions-pubsub-emulator-example
 
 go 1.17
 
