@@ -15,11 +15,8 @@ jobs:
           java-version: '17'
       - name: 'Install Cloud SDK'
         uses: google-github-actions/setup-gcloud@v0
-      - name: 'Set up Cloud SDK'
-        run: |
-          gcloud components install beta
-          gcloud components install pubsub-emulator
-          gcloud components update
+        with:
+          install_components: 'beta,pubsub-emulator'
       - name: 'Start Pub/Sub emulator'
         run: |
           gcloud beta emulators pubsub start --project=testproject
