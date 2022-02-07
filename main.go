@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"time"
 
@@ -41,17 +42,24 @@ func main() {
 	log.Printf("Published message with ID: %s", msgID)
 
 	for3Seconds, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	numAcked := 0
 
 	// Use a callback to receive messages via subscription1.
 	err = sub.Receive(for3Seconds, func(ctx context.Context, m *pubsub.Message) {
 		log.Printf("Received message: %v", m)
 		m.Ack() // Acknowledge that we've consumed the message.
 		log.Printf("Acked message.")
+		numAcked++
 		cancel()
 	})
 	if err != nil {
 		log.Println(err)
 	}
 
-	log.Printf("Program completed.")
+	if numAcked == 1 {
+		log.Printf("Program completed.")
+	} else {
+		panic(fmt.Errorf("expected 1 message acked but none were acked"))
+	}
+
 }
