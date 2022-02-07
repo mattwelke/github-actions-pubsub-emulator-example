@@ -11,7 +11,7 @@ import (
 func main() {
 	log.Printf("Starting.")
 
-	stepDuration := time.Duration(3 * time.Second)
+	stepDuration := time.Duration(10 * time.Second)
 
 	createClientCtx, cancelCreateClient := context.WithTimeout(context.Background(), stepDuration)
 	defer cancelCreateClient()
