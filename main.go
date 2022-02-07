@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"log"
+	"time"
 
 	"cloud.google.com/go/pubsub"
 )
@@ -39,11 +40,14 @@ func main() {
 	}
 	log.Printf("Published message with ID: %s", msgID)
 
+	for3Seconds, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+
 	// Use a callback to receive messages via subscription1.
-	err = sub.Receive(context.Background(), func(ctx context.Context, m *pubsub.Message) {
+	err = sub.Receive(for3Seconds, func(ctx context.Context, m *pubsub.Message) {
 		log.Printf("Received message: %v", m)
 		m.Ack() // Acknowledge that we've consumed the message.
 		log.Printf("Acked message.")
+		cancel()
 	})
 	if err != nil {
 		log.Println(err)
