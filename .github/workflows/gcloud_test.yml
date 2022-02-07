@@ -10,6 +10,8 @@ jobs:
       pubsub:
         # https://hub.docker.com/r/bigtruedata/gcloud-pubsub-emulator
         image: bigtruedata/gcloud-pubsub-emulator
+        ports:
+          - 8538:8538
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
