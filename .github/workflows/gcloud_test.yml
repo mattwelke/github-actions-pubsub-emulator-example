@@ -6,8 +6,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      GCLOUD_PROJECT: testproject
     steps:
       - uses: actions/checkout@v2
       - name: 'Set up Go'
@@ -20,7 +18,9 @@ jobs:
           gcloud components update
       - name: 'Start Pub/Sub emulator'
         run: |
-          gcloud beta emulators pubsub start --project=${{ env.GCLOUD_PROJECT }}
+          gcloud beta emulators pubsub start --project=testproject
       - name: Run program
+        env:
+          PUBSUB_EMULATOR_HOST: '[::1]:8432'
         run: |
           go run main.go

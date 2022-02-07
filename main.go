@@ -10,7 +10,7 @@ import (
 func main() {
 	log.Printf("Starting.")
 
-	client, err := pubsub.NewClient(context.Background(), "project-id")
+	client, err := pubsub.NewClient(context.Background(), "testproject")
 	if err != nil {
 		log.Fatal(err)
 	}
