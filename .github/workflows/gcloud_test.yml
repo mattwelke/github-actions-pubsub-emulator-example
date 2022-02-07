@@ -6,14 +6,21 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      GCLOUD_PROJECT: testproject
     steps:
       - uses: actions/checkout@v2
       - name: 'Set up Go'
         uses: actions/setup-go@v2
-      - name: 'Set up Cloud SDK'
+      - name: 'Install Cloud SDK'
         uses: google-github-actions/setup-gcloud@v0
-      - name: 'Use gcloud CLI'
-        run: 'gcloud info'
+      - name: 'Set up Cloud SDK'
+        run: |
+          gcloud components install pubsub-emulator
+          gcloud components update
+      - name: 'Start Pub/Sub emulator'
+        run: |
+          gcloud beta emulators pubsub start --project=${{ env.GCLOUD_PROJECT }}
       - name: Run program
         run: |
           go run main.go
