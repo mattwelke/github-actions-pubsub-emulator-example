@@ -46,7 +46,7 @@ func main() {
 
 	// Use a callback to receive messages via subscription1.
 	err = sub.Receive(for3Seconds, func(ctx context.Context, m *pubsub.Message) {
-		log.Printf("Received message: %v", m)
+		log.Printf("Received message: %v", string(m.Data))
 		m.Ack() // Acknowledge that we've consumed the message.
 		log.Printf("Acked message.")
 		numAcked++
@@ -61,5 +61,4 @@ func main() {
 	} else {
 		panic(fmt.Errorf("expected 1 message acked but none were acked"))
 	}
-
 }
