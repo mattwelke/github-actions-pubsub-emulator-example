@@ -19,7 +19,7 @@ jobs:
           install_components: 'beta,pubsub-emulator'
       - name: 'Start Pub/Sub emulator'
         run: |
-          gcloud beta emulators pubsub start --project=testproject &
+          gcloud beta emulators pubsub start --project=testproject --host-port=0.0.0.0:8085 &
       - name: Run program
         env:
           PUBSUB_EMULATOR_HOST: 'localhost:8085'
