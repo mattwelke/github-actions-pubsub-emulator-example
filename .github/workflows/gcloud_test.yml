@@ -9,10 +9,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
-      # - uses: actions/setup-java@v2
-      #   with:
-      #     distribution: 'temurin'
-      #     java-version: '17'
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'temurin'
+          java-version: '17'
       - name: 'Install Cloud SDK'
         uses: google-github-actions/setup-gcloud@v0
       - name: 'Set up Cloud SDK'
