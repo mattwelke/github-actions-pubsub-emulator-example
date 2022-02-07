@@ -30,9 +30,9 @@ func main() {
 	}
 
 	// Publish
-	res := topic.Publish(context.Background(), &pubsub.Message{
-		Data: []byte("hello world"),
-	})
+	// res := topic.Publish(context.Background(), &pubsub.Message{
+	// 	Data: []byte("hello world"),
+	// })
 
 	// Get publish results
 	msgID, err := res.Get(context.Background())
