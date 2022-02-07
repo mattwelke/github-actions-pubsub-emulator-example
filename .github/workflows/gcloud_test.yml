@@ -6,6 +6,9 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      pubsub:
+        image: ./emulator
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-go@v2
@@ -23,5 +26,4 @@ jobs:
       - name: Run program
         env:
           PUBSUB_EMULATOR_HOST: '[::1]:8432'
-        run: |
-          go run main.go
+        run: go run main.go
