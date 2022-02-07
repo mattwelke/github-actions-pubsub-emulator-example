@@ -22,6 +22,6 @@ jobs:
           gcloud beta emulators pubsub start --project=testproject &
       - name: Run program
         env:
-          PUBSUB_EMULATOR_HOST: '[::1]:8432'
+          PUBSUB_EMULATOR_HOST: 'localhost:8085'
         run: |
           go run main.go
