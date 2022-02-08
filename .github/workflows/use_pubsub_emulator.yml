@@ -7,17 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-go@v2
-      - name: 'Install Cloud SDK'
-        uses: google-github-actions/setup-gcloud@v0
-        with:
-          install_components: 'beta,pubsub-emulator'
-      - name: 'Start Pub/Sub emulator'
-        run: |
-          gcloud beta emulators pubsub start --project=testproject --host-port=0.0.0.0:8085 &
-      - name: Run program
-        env:
-          PUBSUB_EMULATOR_HOST: 'localhost:8085'
-        run: |
-          go run main.go
+      - name: 'Write to disk'
+        run: echo abc123 > file.txt
+      - name: 'Read back from disk'
+        run: cat file.txt
