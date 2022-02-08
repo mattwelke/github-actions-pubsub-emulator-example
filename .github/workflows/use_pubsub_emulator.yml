@@ -6,8 +6,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      SECRET_VAL: ${{ secrets.MY_SECRET }}
     steps:
       - name: 'Write to disk'
-        run: echo abc123 > file.txt
+        run: echo $SECRET_VAL > file.txt
       - name: 'Read back from disk'
         run: cat file.txt
