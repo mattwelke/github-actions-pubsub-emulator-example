@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: 'Write to disk'
         run: echo $SECRET_VAL > file.txt
+      - name: 'wc -l'
+        run: wc -l file.txt
       - name: 'Read back from disk'
         run: cat file.txt
 
